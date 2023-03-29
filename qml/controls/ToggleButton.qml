@@ -28,18 +28,23 @@ Button {
     background: Rectangle{
         id: bgBtn
         color: internal.dinamicColor
+        radius: 0
+        border.width: 0
+
 
         Image {
             id: iconBtn
             source: btnIconSource
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-            height: 25
-            width: 25
+            height: 30
+            width: 34
             fillMode: Image.PreserveAspectFit
         }
 
         ColorOverlay {
+            width: 34
+            height: 30
             anchors.fill: iconBtn
             source: iconBtn
             color: "#ffffff"
