@@ -121,6 +121,7 @@ Window {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.top: parent.top
+                z: 2
                 anchors.topMargin: 0
                 anchors.rightMargin: 0
                 anchors.leftMargin: 0
@@ -133,7 +134,7 @@ Window {
                     btnColorDefault: "#000000"
                     onClicked: {
                         // Collapsed
-                        if(mainWindow.height == 81){
+                        if(mainWindow.height == 80){
                             animationMenu.running = false
                             animationColapse.running = true
                             leftMenu.width = 180
@@ -338,6 +339,7 @@ Window {
                 anchors.leftMargin: 0
                 anchors.bottomMargin: 0
                 anchors.topMargin: 0
+                z: 0
 
                 Rectangle {
                     id: leftMenu
@@ -382,8 +384,8 @@ Window {
                             onClicked: {
                                 btnHome.isActiveMenu = true
                                 btnSettings.isActiveMenu = false
-                                stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
-                                //pagesHome.setSource(Qt.resolvedUrl(("pages/homePage.qml")))
+                                //stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
+                                pagesHome.setSource(Qt.resolvedUrl(("pages/homePage.qml")))
                             }
                         }
 
@@ -423,8 +425,8 @@ Window {
                         onClicked: {
                             btnHome.isActiveMenu = false
                             btnSettings.isActiveMenu = true
-                            stackView.push(Qt.resolvedUrl("pages/settingsPage.qml"))
-                            // pagesSettings.setSource(Qt.resolvedUrl(("pages/settingsPage.qml")))
+                            // stackView.push(Qt.resolvedUrl("pages/settingsPage.qml"))
+                            pagesSettings.setSource(Qt.resolvedUrl(("pages/settingsPage.qml")))
                         }
                     }
                 }
@@ -440,25 +442,37 @@ Window {
                     anchors.bottomMargin: 25
                     anchors.leftMargin: 0
 
-                    StackView {
-                        id: stackView
+//                    StackView {
+//                        id: stackView
+//                        anchors.fill: parent
+//                        initialItem: Qt.resolvedUrl(("pages/homePage.qml"))
+//                    }
+
+                    Loader{
+                        id: pagesHome
                         anchors.fill: parent
-                        initialItem: Qt.resolvedUrl(("pages/homePage.qml"))
+                        source: Qt.resolvedUrl(("pages/homePage.qml"))
+                        visible: {
+                            if(btnHome.isActiveMenu == true){
+                                return true
+                            }else{
+                                return false
+                            }
+                        }
                     }
 
-//                    Loader{
-//                        id: pagesHome
-//                        anchors.fill: parent
-//                        source: Qt.resolvedUrl(("pages/homePage.qml"))
-//                        visible: false
-//                    }
-
-//                    Loader{
-//                        id: pagesSettings
-//                        anchors.fill: parent
-//                        source: Qt.resolvedUrl(("pages/settingsPage.qml"))
-//                        visible: true
-//                    }
+                    Loader{
+                        id: pagesSettings
+                        anchors.fill: parent
+                        source: Qt.resolvedUrl(("pages/settingsPage.qml"))
+                        visible: {
+                            if(btnSettings.isActiveMenu == true){
+                                 return true
+                            }else{
+                                return false
+                            }
+                        }
+                    }
                 }
 
                 Rectangle {
@@ -476,7 +490,7 @@ Window {
                     Label {
                         id: labelBottomInfo
                         color: "#7c6768"
-                        text: qsTr("Version 1.0, Developer David Castagneto A.")
+                        text: qsTr("Version 1.0 - Developed by David Castagneto A. - MIT License")
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.top: parent.top
@@ -588,3 +602,9 @@ Window {
 
 
 
+
+/*##^##
+Designer {
+    D{i:0;formeditorZoom:0.9}
+}
+##^##*/

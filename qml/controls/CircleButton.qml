@@ -12,6 +12,7 @@ Button {
     property color btnColorClicked : "#00a1f1"
 
 
+
     QtObject{
         id: internal
 
