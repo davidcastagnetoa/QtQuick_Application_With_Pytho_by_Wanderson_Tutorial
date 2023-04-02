@@ -1,11 +1,32 @@
 ## This Python file uses the following encoding: utf-8
 import sys
 import os
+import datetime
 
-from PySide2.QtCore import QObject, Qt, Slot, QUrl, QTimer
+from PySide2.QtCore import QObject, Qt, Slot, Signal, QUrl, QTimer
 from PySide2.QtGui import QGuiApplication
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtCore import QObject
+
+
+class MainWindow(QObject):
+    def __init__(self):
+        QObject.__init__(self)
+
+        # QTimer - Run Timer
+        self.timer = QTimer()
+        self.timer.timeout.connect(lambda: self.setTime())
+        self.timer.start(1000)
+
+    # Signal Set Data
+    printTime = Signal(str)
+
+    # Set Timer Function
+    def setTime(self):
+        now = datetime.datetime.now()
+        formatDate = now.strftime("%H:%M:%S %p - %d/%m/%Y")
+        print(formatDate)
+        self.printTime.emit(formatDate)
 
 
 class WindowManager(QObject):
@@ -28,14 +49,6 @@ class WindowManager(QObject):
     def toggleAlwaysOnTop(self):
         self.setAlwaysOnTop(not self.alwaysOnTop)
 
-    @Slot()
-    def button1Clicked(self):
-        show_next_card()
-
-    @Slot()
-    def button2Clicked(self):
-        hide_next_card()
-
 
 class CardCreator(QObject):
     def __init__(self):
@@ -51,13 +64,14 @@ class CardCreator(QObject):
 
 if __name__ == "__main__":
     app = QGuiApplication(sys.argv)
-    engine = QQmlApplicationEngine()\
+    engine = QQmlApplicationEngine()
 
-    cardCreator = CardCreator()
-    engine.rootContext().setContextProperty("cardCreator", cardCreator)
+    # Get Context
+    main = MainWindow()
+    engine.rootContext().setContextProperty("backend", main)
 
+    # Load QML File
     engine.load(os.path.join(os.path.dirname(__file__), "qml/main.qml"))
-    cardCreator.cardBg = engine.rootObjects()[0].findChild(QObject, "cardBg")
 
     if not engine.rootObjects():
         sys.exit(-1)
@@ -67,8 +81,3 @@ if __name__ == "__main__":
     engine.rootContext().setContextProperty("WindowManager", window_manager)
 
     sys.exit(app.exec_())
-
-
-
-
-

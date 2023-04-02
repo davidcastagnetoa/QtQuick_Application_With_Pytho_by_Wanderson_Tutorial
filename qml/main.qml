@@ -5,9 +5,9 @@ import "controls"
 
 Window {
     id: mainWindow
-    width: 1000
+    width: 680
     height: 680
-    minimumWidth: 800
+    minimumWidth: 680
     minimumHeight: 680
     visible: true
     color: "#00000000"
@@ -97,18 +97,19 @@ Window {
         border.color: "#000000"
         border.width: 0
         anchors.fill: parent
+        anchors.rightMargin: 10
+        anchors.leftMargin: 10
+        anchors.topMargin: 10
         clip: true
         anchors.bottomMargin: 10
-        anchors.rightMargin: windowMargin
-        anchors.leftMargin: windowMargin
-        anchors.topMargin: windowMargin
 
         Rectangle {
             id: appContainer
+            visible: true
             color: "#00000000"
             border.width: 0
             anchors.fill: parent
-            anchors.rightMargin: 1
+            anchors.rightMargin: 0
             anchors.leftMargin: 1
             anchors.bottomMargin: 1
             anchors.topMargin: 1
@@ -181,30 +182,45 @@ Window {
                     Label {
                         id: labelTopInfo
                         color: "#7c6768"
-                        text: qsTr("Application Description")
+                        text: qsTr("Reachable Texts")
                         anchors.left: parent.left
-                        anchors.right: parent.right
+                        anchors.right: labelDate.left
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         verticalAlignment: Text.AlignVCenter
+                        anchors.rightMargin: 10
                         anchors.bottomMargin: 0
-                        anchors.rightMargin: 300
                         anchors.leftMargin: 10
                         anchors.topMargin: 0
                     }
 
                     Label {
+                        id: labelDate
+                        color: "#7c6768"
+                        text: qsTr("Date")
+                        anchors.left: labelTopInfo.right
+                        anchors.right: labelRight.left
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        horizontalAlignment: Text.AlignRight
+                        verticalAlignment: Text.AlignVCenter
+                        anchors.leftMargin: 50
+                        anchors.rightMargin: 5
+                        anchors.bottomMargin: 0
+                        anchors.topMargin: 0
+                    }
+
+                    Label {
                         id: labelRight
+                        width: 40
                         color: "#7c6768"
                         text: qsTr("| HOME")
-                        anchors.left: labelTopInfo.right
                         anchors.right: parent.right
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         horizontalAlignment: Text.AlignRight
                         verticalAlignment: Text.AlignVCenter
                         anchors.rightMargin: 10
-                        anchors.leftMargin: 0
                         anchors.bottomMargin: 0
                         anchors.topMargin: 0
                     }
@@ -246,7 +262,7 @@ Window {
                     Label {
                         id: label
                         color: "#ebc2c4"
-                        text: qsTr("SalvaTextos")
+                        text: qsTr("TEXTSAVER")
                         anchors.left: iconApp.right
                         anchors.right: parent.right
                         anchors.top: parent.top
@@ -597,14 +613,28 @@ Window {
         }
     }
 
+    Connections{
+        target: backend
+
+        function onPrintTime(time){
+            labelDate.text = time
+        }
+
+        ////For Show/Hide something
+        //function onIsVisible(isVisible){
+            //rectangleVisible.visible = isVisible
+        //}
+
+    }
+
 }
 
 
 
 
 
-/*##^##
-Designer {
-    D{i:0;formeditorZoom:0.9}
-}
-##^##*/
+
+
+
+
+

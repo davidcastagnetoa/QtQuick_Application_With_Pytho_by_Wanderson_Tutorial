@@ -14,7 +14,7 @@ Item {
             anchors.fill: parent
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            font.pointSize: 18
+            font.pointSize: 12
         }
     }
 
