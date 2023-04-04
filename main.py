@@ -81,3 +81,5 @@ if __name__ == "__main__":
     engine.rootContext().setContextProperty("WindowManager", window_manager)
 
     sys.exit(app.exec_())
+
+#Genera una funcion que guarde en el portapapeles un texto en textField.text al pulsar un boton de un componente qml con id copyBtn
